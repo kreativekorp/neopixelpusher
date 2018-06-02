@@ -27,7 +27,7 @@ Control software for Adafruit NeoPixels.
 * RTC on SCL/SDA
 * Can be modified at top of .ino file
 
-## Simple Serial Protocol
+## Serial Protocol
 
 * `E` - Switch to Effect Mode
   * `ER` - Report whether randomization is in effect and time between effects
@@ -90,3 +90,109 @@ Control software for Adafruit NeoPixels.
   * `CT` - Report clock time
 * `PB` _n_ - Set brightness level (0-255)
 * `PZ` - Report free RAM
+
+## Effect Modes
+
+* 0 - Steady On
+* 1 - Scroll Left
+* 2 - Scroll Right
+* 3 - Blink
+* 4 - Cycle
+* 5 - Cycle On/Off
+* 6 - Color Wipe
+* 7 - Color Wipe On/Off
+* 8 - Fast Fade In/Out
+* 9 - Fast Fade Cycle
+* 10 - Fast Fade Cycle In/Out
+* 11 - Slow Fade In/Out
+* 12 - Slow Fade Cycle
+* 13 - Slow Fade Cycle In/Out
+* 14 - Walk Left
+* 15 - Walk Right
+* 16 - Walk Left/Right
+* 17 - Move Left
+* 18 - Move Right
+* 19 - Oscillate
+* 20 - Running Lights A Left
+* 21 - Running Lights A Right
+* 22 - Running Lights B Left
+* 23 - Running Lights B Right
+* 24 - Twinkle
+* 25 - Random Twinkle
+* 26 - Endless Twinkle
+* 27 - Moodlight
+* 28 - Sparkle
+* 29 - Random Sparkle
+* 30 - Snow Sparkle
+* 31 - Static
+* 32 - Tail Chase Left
+* 33 - Tail Chase Right
+* 34 - Larson Scanner A
+* 35 - Larson Scanner B
+* 36 - Bouncing Balls A
+* 37 - Bouncing Balls B
+* 38 - Fire
+* 39 - Meteor Rain
+* 40 - Chase 1/2
+* 41 - Chase 1/3
+* 42 - Chase 1/4
+* 43 - Chase 2/3
+* 44 - Chase 2/4
+* 45 - Chase 3/4
+* 46 - Slo Glo 3
+* 47 - Slo Glo 4
+* 48 - Waves 3
+* 49 - Waves 4
+* 50 - Twinkle Flash A
+* 51 - Twinkle Flash B
+* 52 - Twinkle Flash C
+* 53 - Chasing Flash
+* 54 - Walk 3
+* 55 - Walk 4
+* 56 - Oscillate 3
+* 57 - Oscillate 4
+
+## Color Patterns
+
+* 0 - Bright White
+* 1 - Warm White
+* 2 - Azure
+* 3 - Multicolor Mini (Red, Blue, Green, Magenta, Gold)
+* 4 - Multicolor Solid (Red, Blue, White, Orange, Green)
+* 5 - Multicolor Translucent (Red, Blue, Green, Yellow, Magenta)
+* 6 - Rainbow (Red, Orange, Yellow, Green, Cyan, Blue, Violet, Magenta)
+* 7 - Pastel Rainbow
+* 8 - Red & White
+* 9 - Red & Green
+* 10 - Blue & White
+* 11 - Blue & Green
+* 12 - Autumn Colors (Brown, Red, Orange, Yellow)
+* 13 - Orange
+* 14 - Summer Colors (Yellows)
+* 15 - Red White & Blue
+* 16 - Spring Colors (Yellows & Greens)
+* 17 - Valentines (Reds & Pinks)
+* 18 - Winter Colors (Cyans & Blues)
+* 19 - Purples
+* 20 - Rainbow Deluxe
+* 21 - Assorted Pastels
+* 22 - Red, Yellow, Blue, Green
+* 23 - Orange, Magenta, Yellow
+* 24 - Magenta, Yellow
+* 25 - Red
+* 26 - Gold
+* 27 - Green
+* 28 - Blue
+* 29 - Red & Blue
+* 30 - Barber Pole (Red, White, Blue, White)
+* 31 - Red White & Green
+* 32 - Assorted Colors 1
+* 33 - Assorted Colors 2
+* 34 - Purple, Indigo, Magenta
+* 35 - Pink, Magenta, Cyan
+* 36 - Red, Orange, Yellow, Green, Blue, Violet
+* 37 - Orange, Yellow, Green
+* 38 - White, Violet, Azure
+* 39 - Yellow, Pink, Aquamarine
+* 40 - Pastel Pink, Orange, Yellow, White, Cyan, Purple
+* 41 - Cyan, Azure, Purple, Pink, Orange, Yellow, Green
