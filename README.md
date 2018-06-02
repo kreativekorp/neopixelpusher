@@ -42,7 +42,7 @@ Control software for Adafruit NeoPixels.
   * `ECX` _rrggbb_ ... - Extend custom color pattern (up to 4 colors at a time, up to 32 at max)
   * `ECT` - Report number of colors
     * `ECT` _n_ - Report value of _n_-th color
-  * `EBP` - Report current blink pattern present (0-39, or 254 if custom)
+  * `EBP` - Report current blink pattern present (0-17, or 254 if custom)
     * `EBP` _n_ - Set current blink pattern preset
   * `EBS` _ms_ _n_ _aabbccdd_ ... - Set custom effect / blink pattern
     * _ms_ - Milliseconds per frame, 2 hex digits
@@ -86,7 +86,7 @@ Control software for Adafruit NeoPixels.
     * `CM0` - Point mode
     * `CM1` - Line mode
     * `CM2` - Binary mode
-  * `CS` _yyyymmdd_ _hhmm_ - Set clock time
+  * `CS` _yyyymmdd_ _hhmmss_ - Set clock time
   * `CT` - Report clock time
 * `PB` _n_ - Set brightness level (0-255)
 * `PZ` - Report free RAM
