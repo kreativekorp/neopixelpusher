@@ -133,24 +133,42 @@ Control software for Adafruit NeoPixels.
 * 37 - Bouncing Balls B
 * 38 - Fire
 * 39 - Meteor Rain
-* 40 - Chase 1/2
-* 41 - Chase 1/3
-* 42 - Chase 1/4
-* 43 - Chase 2/3
-* 44 - Chase 2/4
-* 45 - Chase 3/4
-* 46 - Slo Glo 3
-* 47 - Slo Glo 4
-* 48 - Waves 3
-* 49 - Waves 4
-* 50 - Twinkle Flash A
-* 51 - Twinkle Flash B
-* 52 - Twinkle Flash C
-* 53 - Chasing Flash
-* 54 - Walk 3
-* 55 - Walk 4
-* 56 - Oscillate 3
-* 57 - Oscillate 4
+* 40 - Chase 1/2\
+  ![](wiki/chase12.gif)
+* 41 - Chase 1/3\
+  ![](wiki/chase13.gif)
+* 42 - Chase 1/4\
+  ![](wiki/chase14.gif)
+* 43 - Chase 2/3\
+  ![](wiki/chase23.gif)
+* 44 - Chase 2/4\
+  ![](wiki/chase24.gif)
+* 45 - Chase 3/4\
+  ![](wiki/chase34.gif)
+* 46 - Slo Glo 3\
+  ![](wiki/sloglo3.gif)
+* 47 - Slo Glo 4\
+  ![](wiki/sloglo4.gif)
+* 48 - Waves 3\
+  ![](wiki/waves3.gif)
+* 49 - Waves 4\
+  ![](wiki/waves4.gif)
+* 50 - Twinkle Flash A\
+  ![](wiki/twinkleflasha.gif)
+* 51 - Twinkle Flash B\
+  ![](wiki/twinkleflashb.gif)
+* 52 - Twinkle Flash C\
+  ![](wiki/twinkleflashc.gif)
+* 53 - Chasing Flash\
+  ![](wiki/chasingflash.gif)
+* 54 - Walk 3\
+  ![](wiki/walk3.gif)
+* 55 - Walk 4\
+  ![](wiki/walk4.gif)
+* 56 - Oscillate 3\
+  ![](wiki/oscillate3.gif)
+* 57 - Oscillate 4\
+  ![](wiki/oscillate4.gif)
 
 ## Color Patterns
 
