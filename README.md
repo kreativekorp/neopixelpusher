@@ -154,45 +154,87 @@ Control software for Adafruit NeoPixels.
 
 ## Color Patterns
 
-* 0 - Bright White
-* 1 - Warm White
-* 2 - Azure
-* 3 - Multicolor Mini (Red, Blue, Green, Magenta, Gold)
-* 4 - Multicolor Solid (Red, Blue, White, Orange, Green)
-* 5 - Multicolor Translucent (Red, Blue, Green, Yellow, Magenta)
-* 6 - Rainbow (Red, Orange, Yellow, Green, Cyan, Blue, Violet, Magenta)
-* 7 - Pastel Rainbow
-* 8 - Red & White
-* 9 - Red & Green
-* 10 - Blue & White
-* 11 - Blue & Green
-* 12 - Autumn Colors (Brown, Red, Orange, Yellow)
-* 13 - Orange
-* 14 - Summer Colors (Yellows)
-* 15 - Red White & Blue
-* 16 - Spring Colors (Yellows & Greens)
-* 17 - Valentines (Reds & Pinks)
-* 18 - Winter Colors (Cyans & Blues)
-* 19 - Purples
-* 20 - Rainbow Deluxe
-* 21 - Assorted Pastels
-* 22 - Red, Yellow, Blue, Green
-* 23 - Orange, Magenta, Yellow
-* 24 - Magenta, Yellow
-* 25 - Red
-* 26 - Gold
-* 27 - Green
-* 28 - Blue
-* 29 - Red & Blue
-* 30 - Barber Pole (Red, White, Blue, White)
-* 31 - Red White & Green
-* 32 - Assorted Colors 1
-* 33 - Assorted Colors 2
-* 34 - Purple, Indigo, Magenta
-* 35 - Pink, Magenta, Cyan
-* 36 - Red, Orange, Yellow, Green, Blue, Violet
-* 37 - Orange, Yellow, Green
-* 38 - White, Violet, Azure
-* 39 - Yellow, Pink, Aquamarine
-* 40 - Pastel Pink, Orange, Yellow, White, Cyan, Purple
-* 41 - Cyan, Azure, Purple, Pink, Orange, Yellow, Green
+* 0 - Bright White\
+  ![](wiki/crystal.png)
+* 1 - Warm White\
+  ![](wiki/warmwhite.png)
+* 2 - Azure\
+  ![](wiki/icicle.png)
+* 3 - Multicolor Mini (Red, Blue, Green, Magenta, Gold)\
+  ![](wiki/multicolormini.png)
+* 4 - Multicolor Solid (Red, Blue, White, Orange, Green)\
+  ![](wiki/multicolorsolid.png)
+* 5 - Multicolor Translucent (Red, Blue, Green, Yellow, Magenta)\
+  ![](wiki/multicolortranslucent.png)
+* 6 - Rainbow (Red, Orange, Yellow, Green, Cyan, Blue, Violet, Magenta)\
+  ![](wiki/rainbow.png)
+* 7 - Pastel Rainbow\
+  ![](wiki/pastel.png)
+* 8 - Red & White\
+  ![](wiki/candycane.png)
+* 9 - Red & Green\
+  ![](wiki/noel.png)
+* 10 - Blue & White\
+  ![](wiki/cabana.png)
+* 11 - Blue & Green\
+  ![](wiki/surfandturf.png)
+* 12 - Autumn Colors (Brown, Red, Orange, Yellow)\
+  ![](wiki/autumn.png)
+* 13 - Orange\
+  ![](wiki/pumpkin.png)
+* 14 - Summer Colors (Yellows)\
+  ![](wiki/summer.png)
+* 15 - Red White & Blue\
+  ![](wiki/independence.png)
+* 16 - Spring Colors (Yellows & Greens)\
+  ![](wiki/spring.png)
+* 17 - Valentines (Reds & Pinks)\
+  ![](wiki/truelove.png)
+* 18 - Winter Colors (Cyans & Blues)\
+  ![](wiki/winter.png)
+* 19 - Purples\
+  ![](wiki/tammyday.png)
+* 20 - Rainbow Deluxe\
+  ![](wiki/rainbowdeluxe.png)
+* 21 - Assorted Pastels\
+  ![](wiki/beckiescolors.png)
+* 22 - Red, Yellow, Blue, Green\
+  ![](wiki/primaries.png)
+* 23 - Orange, Magenta, Yellow\
+  ![](wiki/powellstation.png)
+* 24 - Magenta, Yellow\
+  ![](wiki/festivebowtree.png)
+* 25 - Red\
+  ![](wiki/redalert.png)
+* 26 - Gold\
+  ![](wiki/underconstruction.png)
+* 27 - Green\
+  ![](wiki/clover.png)
+* 28 - Blue\
+  ![](wiki/bluelightspecial.png)
+* 29 - Red & Blue\
+  ![](wiki/lawandorder.png)
+* 30 - Barber Pole (Red, White, Blue, White)\
+  ![](wiki/barberpole.png)
+* 31 - Red White & Green\
+  ![](wiki/genova.png)
+* 32 - Assorted Colors 1\
+  ![](wiki/mosswood1.png)
+* 33 - Assorted Colors 2\
+  ![](wiki/mosswood2.png)
+* 34 - Purple, Indigo, Magenta\
+  ![](wiki/magic.png)
+* 35 - Pink, Magenta, Cyan\
+  ![](wiki/laughter.png)
+* 36 - Red, Orange, Yellow, Green, Blue, Violet\
+  ![](wiki/loyalty.png)
+* 37 - Orange, Yellow, Green\
+  ![](wiki/honesty.png)
+* 38 - White, Violet, Azure\
+  ![](wiki/generosity.png)
+* 39 - Yellow, Pink, Aquamarine\
+  ![](wiki/kindness.png)
+* 40 - Pastel Pink, Orange, Yellow, White, Cyan, Purple\
+  ![](wiki/harmony.png)
+* 41 - Cyan, Azure, Purple, Pink, Orange, Yellow, Green\
+  ![](wiki/unowen.png)
