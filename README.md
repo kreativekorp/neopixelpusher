@@ -109,12 +109,18 @@ Control software for Adafruit NeoPixels.
   ![](wiki/colorwipe.gif)
 * 7 - Color Wipe On/Off\
   ![](wiki/colorwipeonoff.gif)
-* 8 - Fast Fade In/Out
-* 9 - Fast Fade Cycle
-* 10 - Fast Fade Cycle In/Out
-* 11 - Slow Fade In/Out
-* 12 - Slow Fade Cycle
-* 13 - Slow Fade Cycle In/Out
+* 8 - Fast Fade In/Out\
+  ![](wiki/fastfadeinout.gif)
+* 9 - Fast Fade Cycle\
+  ![](wiki/fastfadecycle.gif)
+* 10 - Fast Fade Cycle In/Out\
+  ![](wiki/fastfadecycleinout.gif)
+* 11 - Slow Fade In/Out\
+  ![](wiki/slowfadeinout.gif)
+* 12 - Slow Fade Cycle\
+  ![](wiki/slowfadecycle.gif)
+* 13 - Slow Fade Cycle In/Out\
+  ![](wiki/slowfadecycleinout.gif)
 * 14 - Walk Left\
   ![](wiki/walkleft.gif)
 * 15 - Walk Right\
