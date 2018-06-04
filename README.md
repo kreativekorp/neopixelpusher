@@ -93,26 +93,40 @@ Control software for Adafruit NeoPixels.
 
 ## Effect Modes
 
-* 0 - Steady On
-* 1 - Scroll Left
-* 2 - Scroll Right
-* 3 - Blink
-* 4 - Cycle
-* 5 - Cycle On/Off
-* 6 - Color Wipe
-* 7 - Color Wipe On/Off
+* 0 - Steady On\
+  ![](wiki/steady.gif)
+* 1 - Scroll Left\
+  ![](wiki/scrollleft.gif)
+* 2 - Scroll Right\
+  ![](wiki/scrollright.gif)
+* 3 - Blink\
+  ![](wiki/blink.gif)
+* 4 - Cycle\
+  ![](wiki/cycle.gif)
+* 5 - Cycle On/Off\
+  ![](wiki/cycleonoff.gif)
+* 6 - Color Wipe\
+  ![](wiki/colorwipe.gif)
+* 7 - Color Wipe On/Off\
+  ![](wiki/colorwipeonoff.gif)
 * 8 - Fast Fade In/Out
 * 9 - Fast Fade Cycle
 * 10 - Fast Fade Cycle In/Out
 * 11 - Slow Fade In/Out
 * 12 - Slow Fade Cycle
 * 13 - Slow Fade Cycle In/Out
-* 14 - Walk Left
-* 15 - Walk Right
-* 16 - Walk Left/Right
-* 17 - Move Left
-* 18 - Move Right
-* 19 - Oscillate
+* 14 - Walk Left\
+  ![](wiki/walkleft.gif)
+* 15 - Walk Right\
+  ![](wiki/walkright.gif)
+* 16 - Walk Left/Right\
+  ![](wiki/walkleftright.gif)
+* 17 - Move Left\
+  ![](wiki/hopleft.gif)
+* 18 - Move Right\
+  ![](wiki/hopright.gif)
+* 19 - Oscillate\
+  ![](wiki/oscillate.gif)
 * 20 - Running Lights A Left
 * 21 - Running Lights A Right
 * 22 - Running Lights B Left
