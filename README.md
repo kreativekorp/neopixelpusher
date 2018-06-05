@@ -149,10 +149,14 @@ Control software for Adafruit NeoPixels.
   ![](wiki/endlesstwinkle.gif)
 * 27 - Moodlight\
   ![](wiki/moodlight.gif)
-* 28 - Sparkle
-* 29 - Random Sparkle
-* 30 - Snow Sparkle
-* 31 - Static
+* 28 - Sparkle\
+  ![](wiki/sparkle.gif)
+* 29 - Random Sparkle\
+  ![](wiki/randomsparkle.gif)
+* 30 - Snow Sparkle\
+  ![](wiki/snowsparkle.gif)
+* 31 - Static\
+  ![](wiki/static.gif)
 * 32 - Tail Chase Left
 * 33 - Tail Chase Right
 * 34 - Larson Scanner A
