@@ -141,10 +141,14 @@ Control software for Adafruit NeoPixels.
   ![](wiki/runninglightsbleft.gif)
 * 23 - Running Lights B Right\
   ![](wiki/runninglightsbright.gif)
-* 24 - Twinkle
-* 25 - Random Twinkle
-* 26 - Endless Twinkle
-* 27 - Moodlight
+* 24 - Twinkle\
+  ![](wiki/twinkle.gif)
+* 25 - Random Twinkle\
+  ![](wiki/randomtwinkle.gif)
+* 26 - Endless Twinkle\
+  ![](wiki/endlesstwinkle.gif)
+* 27 - Moodlight\
+  ![](wiki/moodlight.gif)
 * 28 - Sparkle
 * 29 - Random Sparkle
 * 30 - Snow Sparkle
