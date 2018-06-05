@@ -133,10 +133,14 @@ Control software for Adafruit NeoPixels.
   ![](wiki/hopright.gif)
 * 19 - Oscillate\
   ![](wiki/oscillate.gif)
-* 20 - Running Lights A Left
-* 21 - Running Lights A Right
-* 22 - Running Lights B Left
-* 23 - Running Lights B Right
+* 20 - Running Lights A Left\
+  ![](wiki/runninglightsaleft.gif)
+* 21 - Running Lights A Right\
+  ![](wiki/runninglightsaright.gif)
+* 22 - Running Lights B Left\
+  ![](wiki/runninglightsbleft.gif)
+* 23 - Running Lights B Right\
+  ![](wiki/runninglightsbright.gif)
 * 24 - Twinkle
 * 25 - Random Twinkle
 * 26 - Endless Twinkle
