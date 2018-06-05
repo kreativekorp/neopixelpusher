@@ -161,8 +161,10 @@ Control software for Adafruit NeoPixels.
   ![](wiki/tailchaseleft.gif)
 * 33 - Tail Chase Right\
   ![](wiki/tailchaseright.gif)
-* 34 - Larson Scanner A
-* 35 - Larson Scanner B
+* 34 - Larson Scanner A\
+  ![](wiki/larsonscannera.gif)
+* 35 - Larson Scanner B\
+  ![](wiki/larsonscannerb.gif)
 * 36 - Bouncing Balls A
 * 37 - Bouncing Balls B
 * 38 - Fire
