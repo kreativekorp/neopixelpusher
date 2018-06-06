@@ -165,8 +165,10 @@ Control software for Adafruit NeoPixels.
   ![](wiki/larsonscannera.gif)
 * 35 - Larson Scanner B\
   ![](wiki/larsonscannerb.gif)
-* 36 - Bouncing Balls A
-* 37 - Bouncing Balls B
+* 36 - Bouncing Balls A\
+  ![](wiki/bouncingballs.gif)
+* 37 - Bouncing Balls B\
+  ![](wiki/multicolorbouncingballs.gif)
 * 38 - Fire
 * 39 - Meteor Rain
 * 40 - Chase 1/2\
