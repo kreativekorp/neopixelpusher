@@ -169,7 +169,8 @@ Control software for Adafruit NeoPixels.
   ![](wiki/bouncingballs.gif)
 * 37 - Bouncing Balls B\
   ![](wiki/multicolorbouncingballs.gif)
-* 38 - Fire
+* 38 - Fire\
+  ![](wiki/fire.gif)
 * 39 - Meteor Rain
 * 40 - Chase 1/2\
   ![](wiki/chase12.gif)
