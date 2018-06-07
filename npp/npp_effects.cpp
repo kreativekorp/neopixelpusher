@@ -122,25 +122,19 @@ static void npp_effect_set_color_preset(uint8_t i) {
 }
 
 static uint8_t npp_effect_set_color_pattern(char * buf) {
-	uint8_t i = 0, p = 0, d, rv, gv, bv;
+	uint8_t i = 0, p = 0, d, cv[3];
 	while ((*buf) && i < NPP_EFFECT_MAX_COLORS_RAM) {
 		if ((*buf) == 'X') {
 			i = color_count;
 			p = 0;
 		} else if ((d = parse_digit(*buf)) < 16) {
-			switch (p) {
-				case 0: rv = d << 4; break;
-				case 1: rv |= d; break;
-				case 2: gv = d << 4; break;
-				case 3: gv |= d; break;
-				case 4: bv = d << 4; break;
-				case 5: bv |= d; break;
-			}
+			if (p & 1) cv[p >> 1] |= d;
+			else cv[p >> 1] = d << 4;
 			p++;
 			if (p >= 6) {
-				r[i] = rv;
-				g[i] = gv;
-				b[i] = bv;
+				r[i] = cv[0];
+				g[i] = cv[1];
+				b[i] = cv[2];
 				i++;
 				p = 0;
 			}
@@ -174,7 +168,7 @@ static void npp_effect_set_blink_preset(uint8_t i) {
 }
 
 static uint8_t npp_effect_set_blink_pattern(char * buf) {
-	uint8_t i = 0, p = 253, d, ms, cc, c0, c1, c2, c3;
+	uint8_t i = 0, p = 253, d, ms, cc, cv[4];
 	while ((*buf) && i < NPP_EFFECT_MAX_FRAMES_RAM) {
 		if ((*buf) == 'X') {
 			i = blink_frames;
@@ -182,25 +176,17 @@ static uint8_t npp_effect_set_blink_pattern(char * buf) {
 			ms = blink_msperframe;
 			cc = blink_channels;
 		} else if ((d = parse_digit(*buf)) < 16) {
-			switch (p) {
-				case 253: ms  = d << 4; break;
-				case 254: ms |= d     ; break;
-				case 255: cc  = d     ; break;
-				case 0: c0  = d << 4; break;
-				case 1: c0 |= d     ; break;
-				case 2: c1  = d << 4; break;
-				case 3: c1 |= d     ; break;
-				case 4: c2  = d << 4; break;
-				case 5: c2 |= d     ; break;
-				case 6: c3  = d << 4; break;
-				case 7: c3 |= d     ; break;
-			}
+			if (p == 253) ms = d << 4;
+			else if (p == 254) ms |= d;
+			else if (p == 255) cc = d;
+			else if (p & 1) cv[p >> 1] |= d;
+			else cv[p >> 1] = d << 4;
 			p++;
 			if (p < 253 && p >= (cc << 1)) {
-				ch0[i] = c0;
-				ch1[i] = c1;
-				ch2[i] = c2;
-				ch3[i] = c3;
+				ch0[i] = cv[0];
+				ch1[i] = cv[1];
+				ch2[i] = cv[2];
+				ch3[i] = cv[3];
 				i++;
 				p = 0;
 			}

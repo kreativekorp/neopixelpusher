@@ -72,7 +72,7 @@ void loop() {
 	}
 }
 
-char * npp_execute_command(char * buf) {
+static char * npp_execute_command(char * buf) {
 	switch (buf[0]) {
 		case 'C':
 			if (pgm != PGM_CLOCK) EEPROM_update(5, pgm = PGM_CLOCK);
@@ -93,7 +93,7 @@ char * npp_execute_command(char * buf) {
 	return 0;
 }
 
-char * npp_system_command(char * buf) {
+static char * npp_system_command(char * buf) {
 	uint8_t v, i;
 	uint16_t v16;
 	switch (buf[0]) {
@@ -123,7 +123,7 @@ char * npp_system_command(char * buf) {
 	return 0;
 }
 
-int free_ram() {
+static int free_ram() {
   extern int __heap_start, * __brkval; int v;
   return (int)&v - ((__brkval == 0) ? (int)&__heap_start : (int)__brkval);
 }
