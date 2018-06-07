@@ -46,7 +46,7 @@ static const uint8_t npp_color_pattern_kindness         [] PROGMEM = {  3, CnLEM
 static const uint8_t npp_color_pattern_harmony          [] PROGMEM = {  6, CnPNK, CnCRG, CnLEM, CnWHT, CnSKY, CnLVN };
 static const uint8_t npp_color_pattern_u_n_owen         [] PROGMEM = {  7, CnCYN, CnAZR, CnPUR, CnRSE, CnORG, CnYEL, CnGRN };
 
-static const uint8_t * npp_color_patterns[NPP_COLOR_PATTERNS] PROGMEM = {
+static const uint8_t * const npp_color_patterns[NPP_COLOR_PATTERNS] PROGMEM = {
 	npp_color_pattern_crystal,
 	npp_color_pattern_warm_white,
 	npp_color_pattern_icicle,

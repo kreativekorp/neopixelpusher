@@ -24,7 +24,7 @@ static const uint8_t npp_blink_pattern_walk_4          [] PROGMEM = { 120,  8, 4
 static const uint8_t npp_blink_pattern_oscillate_3     [] PROGMEM = { 160,  4, 3, 255,   0,   0,   0, 255,   0,   0,   0, 255,   0, 255,   0 };
 static const uint8_t npp_blink_pattern_oscillate_4     [] PROGMEM = { 120,  6, 4, 255,   0,   0,   0,   0, 255,   0,   0,   0,   0, 255,   0,   0,   0,   0, 255,   0,   0, 255,   0,   0, 255,   0,   0 };
 
-static const uint8_t * npp_blink_patterns[NPP_BLINK_PATTERNS] PROGMEM = {
+static const uint8_t * const npp_blink_patterns[NPP_BLINK_PATTERNS] PROGMEM = {
 	npp_blink_pattern_chase_1_of_2,
 	npp_blink_pattern_chase_1_of_3,
 	npp_blink_pattern_chase_1_of_4,
