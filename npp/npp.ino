@@ -56,25 +56,8 @@ void loop() {
 	while (Serial.available() > 0) {
 		char b = Serial.read();
 		if (b == '\n' || b == '\r') {
-			char * res = 0;
 			buf[ptr] = 0;
-			switch (buf[0]) {
-				case 'C':
-					if (pgm != PGM_CLOCK) EEPROM_update(5, pgm = PGM_CLOCK);
-					if (buf[1]) res = npp_clock_command(&buf[1]);
-					break;
-				case 'E':
-					if (pgm != PGM_EFFECTS) EEPROM_update(5, pgm = PGM_EFFECTS);
-					if (buf[1]) res = npp_effect_command(&buf[1]);
-					break;
-				case 'P':
-					if (buf[1]) res = npp_system_command(&buf[1]);
-					break;
-				case 'X':
-					if (pgm != PGM_XLM) EEPROM_update(5, pgm = PGM_XLM);
-					if (buf[1]) res = npp_xlm_command(&buf[1]);
-					break;
-			}
+			char * res = npp_execute_command(buf);
 			if (res) Serial.println(res);
 			ptr = 0;
 		} else if (b && ptr < 31) {
@@ -89,8 +72,30 @@ void loop() {
 	}
 }
 
+char * npp_execute_command(char * buf) {
+	switch (buf[0]) {
+		case 'C':
+			if (pgm != PGM_CLOCK) EEPROM_update(5, pgm = PGM_CLOCK);
+			if (buf[1]) return npp_clock_command(&buf[1]);
+			break;
+		case 'E':
+			if (pgm != PGM_EFFECTS) EEPROM_update(5, pgm = PGM_EFFECTS);
+			if (buf[1]) return npp_effect_command(&buf[1]);
+			break;
+		case 'P':
+			if (buf[1]) return npp_system_command(&buf[1]);
+			break;
+		case 'X':
+			if (pgm != PGM_XLM) EEPROM_update(5, pgm = PGM_XLM);
+			if (buf[1]) return npp_xlm_command(&buf[1]);
+			break;
+	}
+	return 0;
+}
+
 char * npp_system_command(char * buf) {
 	uint8_t v, i;
+	uint16_t v16;
 	switch (buf[0]) {
 		case 'B':
 			v = 0;
@@ -103,8 +108,17 @@ char * npp_system_command(char * buf) {
 			EEPROM_update(4, v);
 			break;
 		case 'Z':
-			Serial.println(free_ram());
-			break;
+			v16 = free_ram();
+			v = 8;
+			do {
+				buf[v] = '0' + (v16 % 10);
+				v16 /= 10;
+				v++;
+			}
+			while (v16);
+			for (i = 0; v > 8; buf[i++] = buf[--v]);
+			buf[i] = 0;
+			return buf;
 	}
 	return 0;
 }
