@@ -78,11 +78,13 @@
 #define PGM_CLOCK    2
 #define PGM_MAX      3
 
+#define BUF_LEN  32
+
 
 // END CONFIGURATION
 
 
-char buf[32];
+char buf[BUF_LEN];
 uint8_t ptr = 0;
 uint8_t pgm = 0;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NEOPIXEL_NUM, NEOPIXEL_PIN, NEOPIXEL_SET);
@@ -187,7 +189,7 @@ void loop() {
 			char * res = npp_execute_command(buf);
 			if (res) NPP_SERIAL_NAME.println(res);
 			ptr = 0;
-		} else if (b && ptr < 31) {
+		} else if (b && ptr < (BUF_LEN - 1)) {
 			buf[ptr] = b;
 			ptr++;
 		}
@@ -196,7 +198,7 @@ void loop() {
 
 #ifdef BLUEFRUIT_ENABLED
 	ble.println("AT+BLEUARTRX");
-	if (ble.readline(buf, 32) && strcmp(buf, "OK") && strcmp(buf, "ERROR")) {
+	if (ble.readline(buf, BUF_LEN) && strcmp(buf, "OK") && strcmp(buf, "ERROR")) {
 		char * res = npp_execute_command(buf);
 		if (res) {
 			ble.print("AT+BLEUARTTX=");
