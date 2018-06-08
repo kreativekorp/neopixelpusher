@@ -35,21 +35,32 @@
 
 // BLUEFRUIT UART SETTINGS
 
+// Uncomment to enable Bluefruit UART.
 // Comment to disable Bluefruit UART.
-// #define BLUEFRUIT_UART_RXD_PIN   9
-// #define BLUEFRUIT_UART_TXD_PIN   10
-// #define BLUEFRUIT_UART_CTS_PIN   11
-// #define BLUEFRUIT_UART_RTS_PIN   -1
 // #define BLUEFRUIT_UART_MODE_PIN  12
-// #define BLUEFRUIT_UART_SERIAL    Serial1
+
+// Uncomment for software UART.
+// Comment for hardware UART.
+// #define BLUEFRUIT_UART_RXD_PIN  9
+// #define BLUEFRUIT_UART_TXD_PIN  10
+// #define BLUEFRUIT_UART_CTS_PIN  11
+// #define BLUEFRUIT_UART_RTS_PIN  -1
+
+// Uncomment for hardware UART.
+// Comment for software UART.
+// #define BLUEFRUIT_UART_SERIAL  Serial1
 
 
 // BLUEFRUIT SPI SETTINGS
 
+// Uncomment to enable Bluefruit SPI.
 // Comment to disable Bluefruit SPI.
-// #define BLUEFRUIT_SPI_CS    8
-// #define BLUEFRUIT_SPI_IRQ   7
-// #define BLUEFRUIT_SPI_RST   4
+// #define BLUEFRUIT_SPI_CS   8
+// #define BLUEFRUIT_SPI_IRQ  7
+// #define BLUEFRUIT_SPI_RST  4
+
+// Uncomment for software SPI.
+// Comment for hardware SPI.
 // #define BLUEFRUIT_SPI_SCK   13
 // #define BLUEFRUIT_SPI_MISO  12
 // #define BLUEFRUIT_SPI_MOSI  11
@@ -75,6 +86,43 @@ char buf[32];
 uint8_t ptr = 0;
 uint8_t pgm = 0;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NEOPIXEL_NUM, NEOPIXEL_PIN, NEOPIXEL_SET);
+
+#ifdef BLUEFRUIT_UART_MODE_PIN
+#ifdef BLUEFRUIT_UART_SERIAL
+
+#define BLUEFRUIT_ENABLED
+Adafruit_BluefruitLE_UART ble(BLUEFRUIT_UART_SERIAL, BLUEFRUIT_UART_MODE_PIN);
+
+#else
+#if defined(BLUEFRUIT_UART_TXD_PIN) && defined(BLUEFRUIT_UART_RXD_PIN) && defined(BLUEFRUIT_UART_CTS_PIN) && defined(BLUEFRUIT_UART_RTS_PIN)
+
+#define BLUEFRUIT_ENABLED
+#include <SoftwareSerial.h>
+SoftwareSerial bleSS = SoftwareSerial(BLUEFRUIT_UART_TXD_PIN, BLUEFRUIT_UART_RXD_PIN);
+Adafruit_BluefruitLE_UART ble(bleSS, BLUEFRUIT_UART_MODE_PIN, BLUEFRUIT_UART_CTS_PIN, BLUEFRUIT_UART_RTS_PIN);
+
+#endif
+#endif
+#endif
+
+#if defined(BLUEFRUIT_SPI_CS) && defined(BLUEFRUIT_SPI_IRQ) && defined(BLUEFRUIT_SPI_RST)
+#if defined(BLUEFRUIT_SPI_SCK) && defined(BLUEFRUIT_SPI_MISO) && defined(BLUEFRUIT_SPI_MOSI)
+
+#define BLUEFRUIT_ENABLED
+Adafruit_BluefruitLE_SPI ble(
+	BLUEFRUIT_SPI_SCK, BLUEFRUIT_SPI_MISO, BLUEFRUIT_SPI_MOSI,
+	BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST
+);
+
+#else
+
+#define BLUEFRUIT_ENABLED
+Adafruit_BluefruitLE_SPI ble(
+	BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST
+);
+
+#endif
+#endif
 
 void setup() {
 	randomSeed(analogRead(2));
@@ -112,6 +160,11 @@ void setup() {
 	NPP_SERIAL_NAME.begin(NPP_SERIAL_SPEED);
 #endif
 
+#ifdef BLUEFRUIT_ENABLED
+	ble.begin(false);
+	ble.echo(false);
+#endif
+
 #ifdef PGM_CLOCK
 	Wire.begin();
 #endif
@@ -137,6 +190,18 @@ void loop() {
 		} else if (b && ptr < 31) {
 			buf[ptr] = b;
 			ptr++;
+		}
+	}
+#endif
+
+#ifdef BLUEFRUIT_ENABLED
+	ble.println("AT+BLEUARTRX");
+	if (ble.readline(buf, 32) && strcmp(buf, "OK") && strcmp(buf, "ERROR")) {
+		char * res = npp_execute_command(buf);
+		if (res) {
+			ble.print("AT+BLEUARTTX=");
+			ble.println(res);
+			ble.waitForOK();
 		}
 	}
 #endif
