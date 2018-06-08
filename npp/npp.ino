@@ -1,7 +1,12 @@
+#include <Adafruit_BLE.h>
+#include <Adafruit_BluefruitLE_SPI.h>
+#include <Adafruit_BluefruitLE_UART.h>
 #include <Adafruit_NeoPixel.h>
 #include <Arduino.h>
 #include <EEPROM.h>
+#include <SPI.h>
 #include <Wire.h>
+#include <avr/pgmspace.h>
 #include "npp_blink_patterns.h"
 #include "npp_color_patterns.h"
 #include "npp_color.h"
@@ -10,16 +15,61 @@
 #include "npp_effects.h"
 #include "npp_xlm.h"
 
+
+// BEGIN CONFIGURATION
+
+
+// NEOPIXEL SETTINGS
+
 #define NEOPIXEL_NUM  60
 #define NEOPIXEL_PIN  6
 #define NEOPIXEL_SET  (NEO_GRB + NEO_KHZ800)
 
+
+// SERIAL SETTINGS
+
+// Comment to disable serial.
+#define NPP_SERIAL_NAME   Serial
+#define NPP_SERIAL_SPEED  9600
+
+
+// BLUEFRUIT UART SETTINGS
+
+// Comment to disable Bluefruit UART.
+// #define BLUEFRUIT_UART_RXD_PIN   9
+// #define BLUEFRUIT_UART_TXD_PIN   10
+// #define BLUEFRUIT_UART_CTS_PIN   11
+// #define BLUEFRUIT_UART_RTS_PIN   -1
+// #define BLUEFRUIT_UART_MODE_PIN  12
+// #define BLUEFRUIT_UART_SERIAL    Serial1
+
+
+// BLUEFRUIT SPI SETTINGS
+
+// Comment to disable Bluefruit SPI.
+// #define BLUEFRUIT_SPI_CS    8
+// #define BLUEFRUIT_SPI_IRQ   7
+// #define BLUEFRUIT_SPI_RST   4
+// #define BLUEFRUIT_SPI_SCK   13
+// #define BLUEFRUIT_SPI_MISO  12
+// #define BLUEFRUIT_SPI_MOSI  11
+
+
+// NPP-SPECIFIC SETTINGS
+
+// Comment to disable "factory reset" pin.
 #define FACTORY_RESET_PIN  5
 
+// Comment any of these to remove that mode.
+#define PGM_DEFAULT  0
 #define PGM_EFFECTS  0
 #define PGM_XLM      1
 #define PGM_CLOCK    2
 #define PGM_MAX      3
+
+
+// END CONFIGURATION
+
 
 char buf[32];
 uint8_t ptr = 0;
@@ -29,66 +79,119 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NEOPIXEL_NUM, NEOPIXEL_PIN, NEOPIXEL
 void setup() {
 	randomSeed(analogRead(2));
 
+#ifdef FACTORY_RESET_PIN
 	pinMode(FACTORY_RESET_PIN, INPUT_PULLUP);
 	if (!digitalRead(FACTORY_RESET_PIN)) {
 		for (int a = 0; a < 512; a++) {
 			EEPROM_update(a, -1);
 		}
 	}
+#endif
 
 	int eeaddr = 16;
-	eeaddr = npp_clock_setup(eeaddr);
-	eeaddr = npp_xlm_setup(eeaddr);
-	eeaddr = npp_effect_setup(eeaddr);
 
-	Serial.begin(9600);
+#ifdef PGM_CLOCK
+	eeaddr = npp_clock_setup(eeaddr);
+#else
+	eeaddr += 16;
+#endif
+
+#ifdef PGM_XLM
+	eeaddr = npp_xlm_setup(eeaddr);
+#else
+	eeaddr += 32;
+#endif
+
+#ifdef PGM_EFFECTS
+	eeaddr = npp_effect_setup(eeaddr);
+#else
+	eeaddr += 368;
+#endif
+
+#ifdef NPP_SERIAL_NAME
+	NPP_SERIAL_NAME.begin(NPP_SERIAL_SPEED);
+#endif
+
+#ifdef PGM_CLOCK
 	Wire.begin();
+#endif
 
 	strip.begin();
 	strip.show();
 	strip.setBrightness(EEPROM.read(4));
 
 	pgm = EEPROM.read(5);
-	if (pgm >= PGM_MAX) pgm = PGM_EFFECTS;
+	if (pgm >= PGM_MAX) pgm = PGM_DEFAULT;
 }
 
 void loop() {
-	while (Serial.available() > 0) {
-		char b = Serial.read();
+
+#ifdef NPP_SERIAL_NAME
+	while (NPP_SERIAL_NAME.available() > 0) {
+		char b = NPP_SERIAL_NAME.read();
 		if (b == '\n' || b == '\r') {
 			buf[ptr] = 0;
 			char * res = npp_execute_command(buf);
-			if (res) Serial.println(res);
+			if (res) NPP_SERIAL_NAME.println(res);
 			ptr = 0;
 		} else if (b && ptr < 31) {
 			buf[ptr] = b;
 			ptr++;
 		}
 	}
+#endif
+
 	switch (pgm) {
-		case PGM_EFFECTS: npp_effect_loop(); break;
-		case PGM_XLM:     npp_xlm_loop();    break;
-		case PGM_CLOCK:   npp_clock_loop();  break;
+
+#ifdef PGM_EFFECTS
+		case PGM_EFFECTS:
+			npp_effect_loop();
+			break;
+#endif
+
+#ifdef PGM_XLM
+		case PGM_XLM:
+			npp_xlm_loop();
+			break;
+#endif
+
+#ifdef PGM_CLOCK
+		case PGM_CLOCK:
+			npp_clock_loop();
+			break;
+#endif
+
 	}
 }
 
 static char * npp_execute_command(char * buf) {
 	switch (buf[0]) {
+
+#ifdef PGM_CLOCK
 		case 'C':
 			if (pgm != PGM_CLOCK) EEPROM_update(5, pgm = PGM_CLOCK);
 			if (buf[1]) return npp_clock_command(&buf[1]);
 			break;
+#endif
+
+#ifdef PGM_EFFECTS
 		case 'E':
 			if (pgm != PGM_EFFECTS) EEPROM_update(5, pgm = PGM_EFFECTS);
 			if (buf[1]) return npp_effect_command(&buf[1]);
 			break;
+#endif
+
 		case 'P':
 			if (buf[1]) return npp_system_command(&buf[1]);
 			break;
+
+#ifdef PGM_XLM
 		case 'X':
 			if (pgm != PGM_XLM) EEPROM_update(5, pgm = PGM_XLM);
 			if (buf[1]) return npp_xlm_command(&buf[1]);
 			break;
+#endif
+
 	}
 	return 0;
 }
