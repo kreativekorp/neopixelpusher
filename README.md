@@ -1,7 +1,8 @@
 # NeoPixelPusher (NPP)
 Control software for Adafruit NeoPixels.
 
-* Simple serial protocol
+* Simple command protocol
+* Supports control over serial or Bluetooth LE depending on configuration
 * Effect Mode:
   * 58 built-in effects
   * 42 built-in color patterns
@@ -24,10 +25,12 @@ Control software for Adafruit NeoPixels.
 
 * 60 NeoPixels on Pin 6
 * "Factory reset" on Pin 5 (connect to ground to erase EEPROM on startup)
-* RTC on SCL/SDA
-* Can be modified at top of .ino file
+* Serial enabled at 9600 bitrate
+* Bluetooth LE disabled
+* Effect Mode, XLM Mode, and Clock Mode enabled
+* Configuration can be modified at top of .ino file
 
-## Serial Protocol
+## Command Protocol
 
 * `E` - Switch to Effect Mode
   * `ER` - Report whether randomization is in effect and time between effects
