@@ -302,33 +302,66 @@ static void walk_helper(uint16_t i) {
 	strip.show();
 }
 
-static uint32_t running_helper(uint8_t ph, uint8_t ci) {
+static void running_lights_helper(uint8_t ph, uint8_t ci, uint8_t am) {
 	uint8_t rv, gv, bv;
-	switch (ph) {
-		case 0:
-			rv = 0;
-			gv = 0;
-			bv = 0;
-			break;
-		case 1:
-		case 5:
-			rv = r[ci] >> 2;
-			gv = g[ci] >> 2;
-			bv = b[ci] >> 2;
-			break;
-		case 2:
-		case 4:
-			rv = (r[ci] >> 2) + (r[ci] >> 1);
-			gv = (g[ci] >> 2) + (g[ci] >> 1);
-			bv = (b[ci] >> 2) + (b[ci] >> 1);
-			break;
-		default:
+	for (uint16_t si = 0; si < strip_length; si++) {
+		if (!ph) {
+			rv = gv = bv = 0;
+		} else {
 			rv = r[ci];
 			gv = g[ci];
 			bv = b[ci];
-			break;
+			if (ph != 3) {
+				rv >>= 1;
+				gv >>= 1;
+				bv >>= 1;
+				if (ph & 1) {
+					rv >>= 1;
+					gv >>= 1;
+					bv >>= 1;
+				} else {
+					rv += rv > 1;
+					gv += gv > 1;
+					bv += bv > 1;
+				}
+			}
+		}
+		strip.setPixelColor(si, strip.Color(rv, gv, bv));
+		ph++;
+		if (ph >= 6) ph = 0;
+		if (am || !ph) {
+			ci++;
+			if (ci >= color_count) ci = 0;
+		}
 	}
-	return strip.Color(rv, gv, bv);
+	strip.show();
+}
+
+static void twinkle_helper(uint8_t em, uint8_t rm) {
+	if (frame_advanced()) {
+		if (!em && !frame) cycle_helper(0, 0, 0);
+		uint16_t si = random(strip_length);
+		uint8_t ci = rm ? random(color_count) : (si % color_count);
+		strip.setPixelColor(si, strip.Color(r[ci], g[ci], b[ci]));
+		strip.show();
+	}
+}
+
+static void tail_chase_helper(uint8_t left) {
+	uint32_t n = strip_length - 1;
+	uint32_t i = frame;
+	uint8_t ci = 0, m, rv, gv, bv;
+	for (uint16_t si = 0; si < strip_length; si++) {
+		m = ~(uint8_t)(255 * i / n);
+		rv = color_multiply(r[ci], m, 1);
+		gv = color_multiply(g[ci], m, 1);
+		bv = color_multiply(b[ci], m, 1);
+		strip.setPixelColor(si, strip.Color(rv, gv, bv));
+		ci++; if (ci >= color_count) ci = 0;
+		if (left) { i++; if (i > n) i = 0; }
+		else { i--; if (i > n) i = n; }
+	}
+	strip.show();
 }
 
 static void cylon_helper(uint16_t f, uint8_t eyeSize) {
@@ -601,90 +634,37 @@ static void npp_effect_oscillate(void) {
 }
 
 static void npp_effect_running_lights_a_left(void) {
-	uint8_t ph = frame % 6, ci = 0;
-	for (uint16_t si = 0; si < strip_length; si++) {
-		strip.setPixelColor(si, running_helper(ph, ci));
-		ph++; if (ph >= 6) ph = 0;
-		ci++; if (ci >= color_count) ci = 0;
-	}
-	strip.show();
+	running_lights_helper(frame % 6, 0, 1);
 	frame_advance(50, 6);
 }
 
 static void npp_effect_running_lights_a_right(void) {
-	uint8_t ph = 5 - (frame % 6), ci = 0;
-	for (uint16_t si = 0; si < strip_length; si++) {
-		strip.setPixelColor(si, running_helper(ph, ci));
-		ph++; if (ph >= 6) ph = 0;
-		ci++; if (ci >= color_count) ci = 0;
-	}
-	strip.show();
+	running_lights_helper(5 - (frame % 6), 0, 1);
 	frame_advance(50, 6);
 }
 
 static void npp_effect_running_lights_b_left(void) {
-	uint8_t ph = frame % 6, ci = frame / 6;
-	for (uint16_t si = 0; si < strip_length; si++) {
-		strip.setPixelColor(si, running_helper(ph, ci));
-		ph++;
-		if (ph >= 6) {
-			ph = 0;
-			ci++;
-			if (ci >= color_count) {
-				ci = 0;
-			}
-		}
-	}
-	strip.show();
+	running_lights_helper(frame % 6, frame / 6, 0);
 	frame_advance(50, color_count * 6);
 }
 
 static void npp_effect_running_lights_b_right(void) {
-	uint8_t ph = 5 - (frame % 6), ci = color_count - (frame / 6) - 1;
-	for (uint16_t si = 0; si < strip_length; si++) {
-		strip.setPixelColor(si, running_helper(ph, ci));
-		ph++;
-		if (ph >= 6) {
-			ph = 0;
-			ci++;
-			if (ci >= color_count) {
-				ci = 0;
-			}
-		}
-	}
-	strip.show();
+	running_lights_helper(5 - (frame % 6), color_count - (frame / 6) - 1, 0);
 	frame_advance(50, color_count * 6);
 }
 
 static void npp_effect_twinkle(void) {
-	if (frame_advanced()) {
-		if (!frame) cycle_helper(0, 0, 0);
-		uint16_t si = random(strip_length);
-		uint8_t ci = si % color_count;
-		strip.setPixelColor(si, strip.Color(r[ci], g[ci], b[ci]));
-		strip.show();
-	}
+	twinkle_helper(0, 0);
 	frame_advance(100, (strip_length + 5) / 6);
 }
 
 static void npp_effect_twinkle_random(void) {
-	if (frame_advanced()) {
-		if (!frame) cycle_helper(0, 0, 0);
-		uint16_t si = random(strip_length);
-		uint8_t ci = random(color_count);
-		strip.setPixelColor(si, strip.Color(r[ci], g[ci], b[ci]));
-		strip.show();
-	}
+	twinkle_helper(0, 1);
 	frame_advance(100, (strip_length + 5) / 6);
 }
 
 static void npp_effect_twinkle_endless(void) {
-	if (frame_advanced()) {
-		uint16_t si = random(strip_length);
-		uint8_t ci = random(color_count);
-		strip.setPixelColor(si, strip.Color(r[ci], g[ci], b[ci]));
-		strip.show();
-	}
+	twinkle_helper(1, 1);
 	frame_advance(100, 0);
 }
 
@@ -765,36 +745,12 @@ static void npp_effect_static(void) {
 }
 
 static void npp_effect_tail_chase_left(void) {
-	uint32_t n = strip_length - 1;
-	uint32_t i = frame;
-	uint8_t ci = 0, m, rv, gv, bv;
-	for (uint16_t si = 0; si < strip_length; si++) {
-		m = ~(uint8_t)(255 * i / n);
-		rv = color_multiply(r[ci], m, 1);
-		gv = color_multiply(g[ci], m, 1);
-		bv = color_multiply(b[ci], m, 1);
-		strip.setPixelColor(si, strip.Color(rv, gv, bv));
-		ci++; if (ci >= color_count) ci = 0;
-		i++; if (i > n) i = 0;
-	}
-	strip.show();
+	tail_chase_helper(1);
 	frame_advance(10, strip_length);
 }
 
 static void npp_effect_tail_chase_right(void) {
-	uint32_t n = strip_length - 1;
-	uint32_t i = frame;
-	uint8_t ci = 0, m, rv, gv, bv;
-	for (uint16_t si = 0; si < strip_length; si++) {
-		m = ~(uint8_t)(255 * i / n);
-		rv = color_multiply(r[ci], m, 1);
-		gv = color_multiply(g[ci], m, 1);
-		bv = color_multiply(b[ci], m, 1);
-		strip.setPixelColor(si, strip.Color(rv, gv, bv));
-		ci++; if (ci >= color_count) ci = 0;
-		i--; if (i > n) i = n;
-	}
-	strip.show();
+	tail_chase_helper(0);
 	frame_advance(10, strip_length);
 }
 
