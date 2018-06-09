@@ -2,8 +2,15 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <Wire.h>
+#include <avr/pgmspace.h>
 #include "npp_clock.h"
 #include "npp_eeprom.h"
+
+static const uint8_t npp_clock_weekdays[] PROGMEM = {
+	'?', 'S', 'M', 'T', 'W', 'T', 'F', 'S',
+	'?', 'u', 'o', 'u', 'e', 'h', 'r', 'a',
+	'?', 'n', 'n', 'e', 'd', 'u', 'i', 't',
+};
 
 extern Adafruit_NeoPixel strip;
 
@@ -186,7 +193,7 @@ char * npp_clock_command(char * buf) {
 }
 
 void npp_clock_get_time(char * buf) {
-	uint8_t c, y, mo, d, h, mi, s;
+	uint8_t c, y, mo, d, wd, h, mi, s;
 	Wire.beginTransmission(NPP_CLOCK_RTC_ADDR);
 	Wire.write(0x00);
 	Wire.endTransmission();
@@ -194,7 +201,7 @@ void npp_clock_get_time(char * buf) {
 	s  = Wire.read();
 	mi = Wire.read();
 	h  = Wire.read();
-	/**/ Wire.read();
+	wd = Wire.read();
 	d  = Wire.read();
 	mo = Wire.read();
 	y  = Wire.read();
@@ -215,6 +222,11 @@ void npp_clock_get_time(char * buf) {
 	*buf++ = '-';
 	*buf++ = '0' | (d >> 4);
 	*buf++ = '0' | (d & 15);
+	*buf++ = ' ';
+
+	*buf++ = pgm_read_byte(&npp_clock_weekdays[wd]);
+	*buf++ = pgm_read_byte(&npp_clock_weekdays[wd|8]);
+	*buf++ = pgm_read_byte(&npp_clock_weekdays[wd|16]);
 	*buf++ = ' ';
 
 	if (h & 0x40) {
@@ -238,6 +250,18 @@ void npp_clock_get_time(char * buf) {
 	}
 
 	*buf = 0;
+}
+
+static uint8_t day_of_week(uint8_t c, uint8_t y, uint8_t m, uint8_t d) {
+	uint8_t w = 6 - ((c & 3) << 1) + (y >> 2) + y + d;
+	switch (m) {
+		case 9: case 12: w++; case 6: w++;
+		case 2: case 3: case 11: w++;
+		case 8: w++; case 5: w++;
+		case 1: case 10: w++;
+	}
+	if ((m < 3) && !(y & 3) && (y || !(c & 3))) w--;
+	return (w %= 7) ? w : 7;
 }
 
 void npp_clock_set_time(char * buf) {
@@ -264,11 +288,17 @@ void npp_clock_set_time(char * buf) {
 			}
 			p++;
 		} else if (v == 'A' || v == 'a') {
-			h |= 0x40;
+			if (p >= 10) h |= 0x40;
 		} else if (v == 'P' || v == 'p') {
-			h |= 0x60;
+			if (p >= 10) h |= 0x60;
 		}
 	}
+	v = day_of_week(
+		c,
+		(y  >> 4) * 10 + (y  & 15),
+		(mo >> 4) * 10 + (mo & 15),
+		(d  >> 4) * 10 + (d  & 15)
+	);
 
 	EEPROM_update(eestart, century = c);
 
@@ -277,7 +307,7 @@ void npp_clock_set_time(char * buf) {
 	Wire.write(s);
 	Wire.write(mi);
 	Wire.write(h);
-	Wire.write(1);
+	Wire.write(v);
 	Wire.write(d);
 	Wire.write(mo);
 	Wire.write(y);
