@@ -56,8 +56,8 @@ void set_color(uint8_t w, uint8_t r, uint8_t g, uint8_t b) {
   Serial.print("R="); Serial.print(r); Serial.print(", ");
   Serial.print("G="); Serial.print(g); Serial.print(", ");
   Serial.print("B="); Serial.print(b); Serial.println();
-  analogWrite(W_PIN, 255 - w);
-  analogWrite(R_PIN, 255 - r);
-  analogWrite(G_PIN, 255 - g);
-  analogWrite(B_PIN, 255 - b);
+  analogWrite(W_PIN, w);
+  analogWrite(R_PIN, r);
+  analogWrite(G_PIN, g);
+  analogWrite(B_PIN, b);
 }
