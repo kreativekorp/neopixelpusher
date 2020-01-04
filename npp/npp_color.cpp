@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <avr/pgmspace.h>
+#include <inttypes.h>
 #include "npp_color.h"
 
 static const uint8_t npp_gamma_correction[] PROGMEM = {
@@ -21,11 +22,17 @@ static const uint8_t npp_gamma_correction[] PROGMEM = {
 	218, 220, 223, 225, 227, 230, 232, 235, 237, 240, 242, 245, 247, 250, 252, 255,
 };
 
+uint8_t color_correct(uint8_t v) {
+	return pgm_read_byte(&npp_gamma_correction[v]);
+}
+
 uint8_t color_multiply(uint8_t v, uint8_t m, uint8_t gc) {
 	if (gc) m = pgm_read_byte(&npp_gamma_correction[m]);
 	return (uint8_t)( (uint16_t)v * (uint16_t)m / (uint16_t)255 );
 }
 
 uint8_t color_blend(uint8_t v0, uint8_t v1, uint32_t i, uint32_t n) {
-	return (i <= 0) ? v0 : (i >= n) ? v1 : (uint8_t)( (uint32_t)v0 * (n - i) / n + (uint32_t)v1 * i / n );
+	return (i <= 0) ? v0 : (i >= n) ? v1 : (uint8_t)(
+		(long)v0 + ((long)v1 - (long)v0) * (long)i / (long)n
+	);
 }

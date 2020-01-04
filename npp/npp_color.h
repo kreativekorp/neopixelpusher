@@ -2,6 +2,7 @@
 #define __NPP_COLOR_H__
 
 #include <Arduino.h>
+#include <inttypes.h>
 
 // Gamma-corrected color levels, 0 - 15 out of 15
 #define Cx0    0
@@ -74,6 +75,7 @@
 #define CnLVN  Ce6, Ce4, Ce8
 #define CnPNK  Ce8, Ce4, Ce8
 
+uint8_t color_correct(uint8_t v);
 uint8_t color_multiply(uint8_t v, uint8_t m, uint8_t gc);
 uint8_t color_blend(uint8_t v1, uint8_t v2, uint32_t i, uint32_t n);
 
