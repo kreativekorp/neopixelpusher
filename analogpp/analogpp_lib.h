@@ -11,10 +11,16 @@
 
 #define MODE_PIN0 A0
 #define MODE_PIN1 A1
-#define MODE_PIN2 A2
-#define MODE_PIN3 A3
-#define MODE_PIN4 A4
-#define MODE_PIN5 A5
+
+#define MODE_DPIN2 A2
+#define MODE_DPIN3 A3
+#define MODE_DPIN4 A4
+#define MODE_DPIN5 A5
+
+#define MODE_APIN2 A2
+#define MODE_APIN3 A3
+#define MODE_APIN4 A4
+#define MODE_APIN5 A5
 
 void    init_mode();
 uint8_t read_mode();
